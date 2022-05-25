@@ -1,0 +1,43 @@
+<html>
+
+<head>
+
+  <head>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <py-env>
+      - numpy
+      - scipy
+    </py-env>
+  </head>
+
+<body>
+
+  <label for="input_val">Enter radius:</label>
+  <input type="number" id="input_val" name="input_val">[m]
+  <input type="submit" value="Calculate" id="calc" pys-onClick="calc">
+  <p id="output_val"></p>[Hz]
+
+</body>
+
+<py-script>
+
+  from scipy.special import jnyn_zeros
+  from scipy.constants import pi, c
+  from js import document
+
+  input_val = Element("input_val")
+
+  op = Element("output_val")
+
+  def get_frequency_circular(radius):
+      return (jnyn_zeros(1, 1)[1] * c / 2 / pi / radius)[0]
+
+  def calc(*args, **kwargs):
+      radius = float(document.getElementById('input_val').value)
+      res = get_frequency_circular(radius)
+      op.write(res)
+
+</py-script>
+
+</html>
